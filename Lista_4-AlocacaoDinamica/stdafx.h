@@ -15,3 +15,5 @@
 // TODO: reference additional headers your program requires here
 #include <locale.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>

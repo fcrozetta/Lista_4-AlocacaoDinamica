@@ -42,19 +42,116 @@ char * duplica(char *orig) {
 		pos++;
 	}
 	char * novoVector = (char *)malloc((sizeof(char) * pos) +1); // +1 para o '\0'
+	/* Carrega o vetor antigo para o novo*/
 	for (int i = 0; i < pos; i++)
 	{
 		novoVector[i] = orig[i];
 	}
-	novoVector[(sizeof(char) * pos) + 1] = '\0'; // Última posição == \0
+	novoVector[(sizeof(char) * pos)] = '\0'; // Última posição == \0
 	return novoVector;
+}
+
+int * lista_maiores(int *vec, int size, int comparativo, int *qtd) {
+	/* compara os valores maiores que comparativo e coloca em outro vetor (dinâmico) 
+		A quantidade de números maiores deve ser atualizado no qtd*/
+
+	// Conta quantos número são maiores que o comparativo
+	int qtdMaiores = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (vec[i] > comparativo)
+		{
+			qtdMaiores++;
+		}
+	}
+	int *vecMaiores = (int *)malloc(sizeof(int) * qtdMaiores); // Aloca memória para o novo vetor
+	if (qtdMaiores >0)
+	{
+		int counter = 0;
+		for (int i = 0; i < size; i++)
+		{
+			if (vec[i] > comparativo)
+			{
+				vecMaiores[counter] = vec[i];
+				counter++;
+			}
+		}
+	}
+	else
+	{
+		vecMaiores = NULL;
+	}
+
+	*qtd = qtdMaiores; // Atualiza o valor de qtdMaiores
+	return vecMaiores;
+}
+
+void imprime_vetor(int* vet, int n) {
+	/* Imprime o vetor */
+	int i;
+	printf("[");
+	for (i = 0; i < n - 1; i++) {
+		printf("%d, ", vet[i]);
+	}
+	printf("%d]\n", vet[n - 1]);
+}
+
+char * troca_letras(char *s) {
+	/* Recebe um array de char e troca maiúsculas para minúsculas ( e vice-versa )
+		retorna um novo array com as letras alteradas
+	*/
+
+	// TODO: Alterar caracteres acentuados, como [ç,á,ó,ô,ã,etc..]
+
+	char * novoArray = (char *)malloc(sizeof(char) * strlen(s) +1 ); // Aloca memória para o novo arary
+	if (novoArray == NULL) return novoArray; // Return NULL se não puder alocar memória
+
+	for (int i = 0; i < strlen(s); i++)
+	{
+		/* Tratamento de pontuação, espaços e díigitos */
+		if ((isblank(s[i])) || (ispunct(s[i])) || (isdigit(s[1])) )
+		{
+			novoArray[i] = s[i];
+		}
+		/* Tratamento de caracteres alfabéticos */
+		else if (isalpha(s[i]))
+		{
+			if (islower(s[i]))
+			{
+				novoArray[i] = toupper(s[i]);
+			}
+			else
+			{
+				novoArray[i] = tolower(s[i]);
+			}
+		}
+		else
+		{
+			novoArray[i] = s[i];
+		}
+	}
+	novoArray[strlen(s)] = '\0';
+	return novoArray;
+}
+
+char * inverte(char *s) {
+	/* Retorna um array com a conteúdo do array passado de trás para frente */
+	char * reverseArray = (char *)malloc(sizeof(char) * strlen(s) + 1); // Alocação dinâmica
+	if (reverseArray == NULL) return reverseArray; // Return NULL se houver erro
+	for (int i = strlen(s); i > 0; i++)
+	{
+		// Implementar essa Função!
+	}
+
 }
 
 int main()
 {
+	//TODO: Criar um menu para os exercícios, deixando tudo mais organizado!
 	setlocale(LC_ALL, "");
-	char * teste = "fernando";
-	duplica(teste);
+
+
+	
 
 	//printf("%d\n",Ex1());
 
@@ -102,17 +199,49 @@ int main()
 	*/
 
 	/* Ex. 4 - malloc com strings */
+	/*
 	char s[] = "alo alo";
 	char *ps;
 	ps = duplica(s);
 	if (ps == NULL) {
-		/* mensagem de erro e retorno que indica o erro */
 		printf("Tem algo errado que não esta certo!");
 	}
-	s[2] = '\0';
+	s[2] = 'O';
 	printf("%s - %s\n", s, ps);
 	free(ps);
-	
+	*/
+
+	/* Ex. 5 - lista maiores vetores */
+	/*
+	int i;
+	int numeros[10] = { 35, 10, 18, 9, 12, 60, 33, 15, 2, 8 };
+	int limite;
+	int* maiores;
+	int n_maiores;
+	printf("Vetor original = ");
+	imprime_vetor(numeros, 10);
+	while (1) {
+		printf("Digite o valor limite (tecle -1 para sair): ");
+		scanf_s("%d", &limite);
+		if (limite == -1) {
+			break;
+		}
+		maiores = lista_maiores(numeros, 10, limite, &n_maiores);
+		if (maiores == NULL) {
+			printf("Nada a declarar!\n");
+		}
+		else {
+			printf("Valores maiores do que %d = ", limite);
+			imprime_vetor(maiores, n_maiores);
+		}
+	}
+	*/
+
+	/* Ex. 6 - Troca Case de string */
+	/*
+	char teste[] = "aBcD ! ?.";
+	printf("%s", troca_letras(teste));
+	*/
     return 0;
 }
 
