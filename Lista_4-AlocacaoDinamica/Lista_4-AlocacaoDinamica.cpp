@@ -138,11 +138,39 @@ char * inverte(char *s) {
 	/* Retorna um array com a conteúdo do array passado de trás para frente */
 	char * reverseArray = (char *)malloc(sizeof(char) * strlen(s) + 1); // Alocação dinâmica
 	if (reverseArray == NULL) return reverseArray; // Return NULL se houver erro
-	for (int i = strlen(s); i > 0; i++)
+	for (int i = strlen(s) -1; i >= 0; i--)
 	{
-		// Implementar essa Função!
-	}
+		reverseArray[(strlen(s) - i) -1] = s[i];
 
+	}
+	reverseArray[strlen(s)] = '\0';
+	return reverseArray;
+}
+
+char * ultimo_nome(char * nome_completo) {
+	/* Retornar o último nome do array passado.
+		Considerar que não há espaços após o último nome
+		*/
+	int new_size = 0;
+	for (int i = strlen(nome_completo) - 1; i >= 0; i--)
+	{
+		if (isspace(nome_completo[i]))
+		{
+			break;
+		}
+		new_size++;
+	}
+	char * ultimo_nome = (char *)malloc((sizeof(char) *new_size) + 1);
+	if (ultimo_nome == NULL) return ultimo_nome;
+
+	int j = 0;
+	for (int i = strlen(nome_completo) - new_size; i < strlen(nome_completo); i++)
+	{
+		ultimo_nome[j] = nome_completo[i];
+		j++;
+	}
+	ultimo_nome[j] = '\0';
+	return ultimo_nome;
 }
 
 int main()
@@ -151,7 +179,6 @@ int main()
 	setlocale(LC_ALL, "");
 
 
-	
 
 	//printf("%d\n",Ex1());
 
@@ -239,8 +266,20 @@ int main()
 
 	/* Ex. 6 - Troca Case de string */
 	/*
-	char teste[] = "aBcD ! ?.";
-	printf("%s", troca_letras(teste));
+	char vec[] = "aBcD ! ?.";
+	printf("%s", troca_letras(vec));
+	*/
+
+	/* Ex. 7 - Inverte String */
+	/*
+	char vec[] = "aBcD ! ?.";
+	printf("%s", inverte(vec));
+	*/
+
+	/* Ex. 8 - Ultimo Nome */
+	/*
+	char vec[] = "teste 1 2 3 abc";
+	printf("%s", ultimo_nome(vec));
 	*/
     return 0;
 }
